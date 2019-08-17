@@ -2,7 +2,12 @@ import 'reflect-metadata';
 import { ReflectiveInjector, Injectable, Provider } from 'injection-js';
 import { OnInit } from './utils/generic';
 import * as winston from 'winston';
+import dotenv from 'dotenv';
 
+// Configure dotenv
+dotenv.config();
+
+// Configure logging
 winston.configure({
     level: 'debug',
     format: winston.format.cli(),
@@ -21,6 +26,7 @@ winston.configure({
     ]
 });
 
+// Handle unhandled promise rejections
 process.on('unhandledRejection', error => winston.warn('unhandledRejection ' + error));
 
 @Injectable()
@@ -31,9 +37,7 @@ export class Main implements OnInit {
 }
 
 // Define providers
-const providers = [
-    Main
-] as Provider[];
+const providers = [Main] as Provider[];
 
 // Create injector
 const injector = ReflectiveInjector.resolveAndCreate(providers);
